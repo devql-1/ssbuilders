@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
   var STORAGE_KEY = 'ssbuilders_content';
   var DEFAULTS = {
     heroTitle: "Jaipur's Most Trusted Real Estate & Property Experts",
@@ -93,3 +93,4 @@
   });
   renderProperties();
 })();
+// v3
