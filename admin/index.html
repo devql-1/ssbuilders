@@ -4,73 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SS Builders Admin</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css?v=20260703b" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css?v=20260703c" />
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js?v=20260703b"></script>
-  <script>
-    window.CMS_INIT_OPTIONS = {
-      backend: {
-        name: "github",
-        repo: "devql-1/ssbuilders",
-        branch: "main",
-        auth_endpoint: "/api/auth"
-      },
-      media_folder: "images",
-      public_folder: "/images",
-      collections: [
-        {
-          name: "site-content",
-          label: "Site Content",
-          files: [
-            {
-              label: "Hero & About",
-              name: "hero-about",
-              file: "content/hero-about.json",
-              fields: [
-                { label: "Hero Title", name: "heroTitle", widget: "string" },
-                { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" },
-                { label: "About Title", name: "aboutTitle", widget: "string" },
-                { label: "About Description", name: "aboutDesc", widget: "text" }
-              ]
-            },
-            {
-              label: "Contact Info",
-              name: "contact-info",
-              file: "content/contact.json",
-              fields: [
-                { label: "Address", name: "address", widget: "text" },
-                { label: "Phone", name: "phone", widget: "string" },
-                { label: "Email", name: "email", widget: "string" },
-                { label: "Office Hours", name: "hours", widget: "string" }
-              ]
-            }
-          ]
-        },
-        {
-          name: "properties",
-          label: "Properties",
-          files: [
-            {
-              label: "All Properties",
-              name: "properties-list",
-              file: "content/properties/properties.json",
-              fields: [
-                { label: "Properties JSON", name: "properties", widget: "json", required: false }
-              ]
-            }
-          ]
-        }
-      ]
-    };
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js?v=20260703c"></script>
   <script>
     if (typeof CMS !== "undefined") {
-      CMS.init(window.CMS_INIT_OPTIONS);
+      CMS.init();
     } else {
       window.addEventListener("load", function() {
         if (typeof CMS !== "undefined") {
-          CMS.init(window.CMS_INIT_OPTIONS);
+          CMS.init();
         } else {
           document.body.innerHTML = '<div style="padding:40px;text-align:center;"><h2>CMS failed to load</h2><p>Please wait a minute and refresh.</p></div>';
         }
