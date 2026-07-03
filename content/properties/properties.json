@@ -1,0 +1,64 @@
+﻿{
+  "properties": [
+    {
+      "title": "Luxury 3BHK Apartment",
+      "location": "Malviya Nagar, Jaipur",
+      "price": "₹1.25 Crore",
+      "type": "Apartment",
+      "beds": 3,
+      "baths": 2,
+      "area": 1800,
+      "description": "Premium 3BHK apartment in the heart of Malviya Nagar with modern amenities, 24/7 security, power backup, and clubhouse access."
+    },
+    {
+      "title": "Independent Villa",
+      "location": "Vaishali Nagar, Jaipur",
+      "price": "₹1.08 Crore",
+      "type": "Villa",
+      "beds": 3,
+      "baths": 3,
+      "area": 2200,
+      "description": "Spacious independent villa with private garden, modular kitchen, and smart home automation. Located in a premium gated community."
+    },
+    {
+      "title": "2BHK Near Central Park",
+      "location": "C-Scheme, Jaipur",
+      "price": "₹95 Lakh",
+      "type": "Apartment",
+      "beds": 2,
+      "baths": 2,
+      "area": 1200,
+      "description": "Well-ventilated 2BHK apartment near Central Park with excellent connectivity to schools, hospitals, and shopping centers."
+    },
+    {
+      "title": "4BHK Penthouse",
+      "location": "Mansarovar, Jaipur",
+      "price": "₹1.42 Crore",
+      "type": "Apartment",
+      "beds": 4,
+      "baths": 4,
+      "area": 2800,
+      "description": "Exclusive penthouse with terrace garden, jacuzzi, and panoramic city views. Premium construction with Italian marble flooring."
+    },
+    {
+      "title": "Commercial Space",
+      "location": "Jhotwara, Jaipur",
+      "price": "₹72 Lakh",
+      "type": "Commercial",
+      "beds": 0,
+      "baths": 2,
+      "area": 900,
+      "description": "Prime commercial space on the main road with wide frontage, dedicated parking, and high visibility for retail or office use."
+    },
+    {
+      "title": "Residential Plot",
+      "location": "Ajmer Road, Jaipur",
+      "price": "₹85 Lakh",
+      "type": "Plot",
+      "beds": 0,
+      "baths": 0,
+      "area": 1500,
+      "description": "Gated community residential plot with all utilities connected. Clear title, ready for construction, near upcoming metro corridor."
+    }
+  ]
+}
