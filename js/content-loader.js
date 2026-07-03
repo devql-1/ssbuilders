@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
   'use strict';
   async function loadJSON(path) {
     try {
@@ -20,6 +20,41 @@
     document.querySelectorAll(sel).forEach(el => el.setAttribute(attr, val));
   }
   async function init() {
+    try {
+      const ls = localStorage.getItem("ssbuilders_content");
+      if (ls) {
+        const saved = JSON.parse(ls);
+        if (saved.heroTitle) setText("[data-cms=\"heroTitle\"]", saved.heroTitle);
+        if (saved.heroSubtitle) setText("[data-cms=\"heroSubtitle\"]", saved.heroSubtitle);
+        if (saved.aboutTitle) setText("[data-cms=\"aboutTitle\"]", saved.aboutTitle);
+        if (saved.aboutDesc) setText("[data-cms=\"aboutDesc\"]", saved.aboutDesc);
+        if (saved.address) setText("[data-cms=\"address\"]", saved.address);
+        if (saved.phone) {
+          setText("[data-cms=\"phone\"]", saved.phone);
+          setAttr("[data-cms=\"phoneLink\"]", "href", "tel:" + saved.phone.replace(/[^0-9]/g, ""));
+        }
+        if (saved.email) {
+          setText("[data-cms=\"email\"]", saved.email);
+          setAttr("[data-cms=\"emailLink\"]", "href", "mailto:" + saved.email);
+        }
+        if (saved.hours) setText("[data-cms=\"hours\"]", saved.hours);
+        if (saved.properties && Array.isArray(saved.properties)) {
+          saved.properties.forEach((p, i) => {
+            setText("[data-cms=\"property-"+i+"-title\"]", p.title);
+            setText("[data-cms=\"property-"+i+"-location\"]", p.location);
+            setText("[data-cms=\"property-"+i+"-price\"]", p.price);
+            setText("[data-cms=\"property-"+i+"-type\"]", p.type);
+            setText("[data-cms=\"property-"+i+"-beds\"]", p.beds + " BHK");
+            setText("[data-cms=\"property-"+i+"-baths\"]", p.baths + " Bath");
+            setText("[data-cms=\"property-"+i+"-area\"]", p.area + " sq ft");
+            setText("[data-cms=\"property-"+i+"-description\"]", p.description);
+            if (p.image) setAttr("[data-cms=\"property-"+i+"-image\"]", "src", p.image);
+          });
+        }
+        return;
+      }
+    } catch (e) {}
+    const hero = await loadJSON("content/hero-about.json");
     const hero = await loadJSON('content/hero-about.json');
     if (hero) {
       setText('[data-cms="heroTitle"]', hero.heroTitle);

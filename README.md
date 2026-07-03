@@ -7,3 +7,4 @@ Jaipur-based real estate company website built with HTML, CSS, and Decap CMS.
 2. Enable GitHub Pages in repo settings
 3. Visit username.github.io/admin to manage content
 
+
