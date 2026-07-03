@@ -4,22 +4,243 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SS Builders Admin</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css?v=20260703c" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/ss-theme.css" />
+  <style>
+    .admin-wrap { max-width: 980px; margin: 40px auto; }
+    .section-block { display: none; }
+    .section-block.active { display: block; }
+    .status { min-height: 24px; }
+  </style>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js?v=20260703c"></script>
-  <script>
-    if (typeof CMS !== "undefined") {
-      CMS.init();
-    } else {
-      window.addEventListener("load", function() {
-        if (typeof CMS !== "undefined") {
-          CMS.init();
-        } else {
-          document.body.innerHTML = '<div style="padding:40px;text-align:center;"><h2>CMS failed to load</h2><p>Please wait a minute and refresh.</p></div>';
-        }
+  <div class="admin-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="heading mb-0">SS Builders Admin</h1>
+      <div>
+        <a class="btn btn-outline-secondary btn-sm me-2" href="https://github.com/devql-1/ssbuilders" target="_blank">Open Repo</a>
+        <button id="logoutBtn" class="btn btn-outline-danger btn-sm">Logout</button>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">GitHub Access</h5>
+        <p class="text-black-50">Use a GitHub Personal Access Token with <strong>repo</strong> scope to save changes directly to this repository.</p>
+        <div class="mb-2">
+          <label class="form-label">Username</label>
+          <input id="ghUser" class="form-control" placeholder="devql-1" />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Personal Access Token</label>
+          <input id="ghToken" type="password" class="form-control" placeholder="ghp_..." />
+        </div>
+        <button id="connectBtn" class="btn btn-primary btn-sm">Connect</button>
+        <span id="authStatus" class="ms-2 text-black-50"></span>
+      </div>
+    </div>
+
+    <ul class="nav nav-pills mb-3" id="adminTabs">
+      <li class="nav-item"><button class="nav-link active" data-tab="hero">Hero & About</button></li>
+      <li class="nav-item"><button class="nav-link" data-tab="contact">Contact</button></li>
+      <li class="nav-item"><button class="nav-link" data-tab="properties">Properties</button></li>
+    </ul>
+
+    <form id="adminForm" class="section-block active" data-section="hero">
+      <div class="card mb-3"><div class="card-body">
+        <h5 class="card-title">Hero Section</h5>
+        <div class="mb-3"><label class="form-label">Hero Title</label><input type="text" name="heroTitle" class="form-control" /></div>
+        <div class="mb-3"><label class="form-label">Hero Subtitle</label><textarea name="heroSubtitle" class="form-control" rows="2"></textarea></div>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <h5 class="card-title">About Section</h5>
+        <div class="mb-3"><label class="form-label">About Title</label><input type="text" name="aboutTitle" class="form-control" /></div>
+        <div class="mb-3"><label class="form-label">About Description</label><textarea name="aboutDesc" class="form-control" rows="4"></textarea></div>
+      </div></div>
+    </form>
+
+    <form id="contactForm" class="section-block" data-section="contact">
+      <div class="card mb-3"><div class="card-body">
+        <h5 class="card-title">Contact Info</h5>
+        <div class="mb-3"><label class="form-label">Address</label><textarea name="address" class="form-control" rows="2"></textarea></div>
+        <div class="mb-3"><label class="form-label">Phone</label><input type="text" name="phone" class="form-control" /></div>
+        <div class="mb-3"><label class="form-label">Email</label><input type="email" name="email" class="form-control" /></div>
+        <div class="mb-3"><label class="form-label">Office Hours</label><input type="text" name="hours" class="form-control" /></div>
+      </div></div>
+    </form>
+
+    <form id="propertiesForm" class="section-block" data-section="properties">
+      <div id="propertiesList" class="d-flex flex-column gap-3"></div>
+      <button type="button" id="addPropertyBtn" class="btn btn-primary mt-3">+ Add Property</button>
+    </form>
+
+    <div class="mt-3 d-flex gap-2">
+      <button id="saveBtn" class="btn btn-success">Save All Changes</button>
+      <button id="resetBtn" type="button" class="btn btn-outline-danger">Reset to Defaults</button>
+    </div>
+    <div id="status" class="status mt-2"></div>
+  </div>  <script>
+    var DEFAULTS = {
+      heroTitle: "Jaipur's Most Trusted Real Estate & Property Experts",
+      heroSubtitle: "Seth Sanwariya Builders - Building Dreams Into Reality with premium residential and commercial properties across Rajasthan.",
+      aboutTitle: "About Us",
+      aboutDesc: "We are Jaipur's most trusted real estate builders.",
+      address: "1st Floor, Gangaram Nagar, New Aatish Market, Shanthi Nagar, Mansarovar, Jaipur, Rajasthan 302020",
+      phone: "+91-141-234-5678",
+      email: "info@ssbuilders.in",
+      hours: "Monday - Saturday: 10:00 AM - 7:00 PM",
+      properties: [
+        {title: "Luxury 3BHK Apartment", location: "Malviya Nagar, Jaipur", price: "₹1.25 Crore", type: "Apartment", beds: 3, baths: 2, area: 1800, image: "", description: "Premium 3BHK in heart of Malviya Nagar with modern amenities and clubhouse."},
+        {title: "Independent Villa", location: "Vaishali Nagar, Jaipur", price: "₹1.08 Crore", type: "Villa", beds: 3, baths: 3, area: 2200, image: "", description: "Spacious villa with private garden and gated community security."},
+        {title: "2BHK Near Central Park", location: "C-Scheme, Jaipur", price: "₹95 Lakh", type: "Apartment", beds: 2, baths: 2, area: 1200, image: "", description: "Well-ventilated 2BHK near Central Park with excellent connectivity."},
+        {title: "4BHK Penthouse", location: "Mansarovar, Jaipur", price: "₹1.42 Crore", type: "Apartment", beds: 4, baths: 4, area: 2400, image: "", description: "Luxury penthouse with panoramic city views and smart home features."},
+        {title: "Commercial Space", location: "Jhotwara, Jaipur", price: "₹72 Lakh", type: "Commercial", beds: 0, baths: 2, area: 900, image: "", description: "Prime commercial space on main road with dedicated parking."},
+        {title: "Residential Plot", location: "Ajmer Road, Jaipur", price: "₹85 Lakh", type: "Plot", beds: 0, baths: 0, area: 1500, image: "", description: "Gated community plot with clear title and metro corridor nearby."}
+      ]
+    };
+
+    function getStorage() {
+      try { var s = localStorage.getItem("ssbuilders_admin"); return s ? JSON.parse(s) : null; } catch (e) { return null; }
+    }
+    function setStorage(v) { localStorage.setItem("ssbuilders_admin", JSON.stringify(v)); }
+    var data = getStorage() || JSON.parse(JSON.stringify(DEFAULTS));
+    var auth = getStorage() && getStorage().user ? getStorage().user : null;
+
+    function esc(s) {
+      var d = document.createElement("div");
+      d.appendChild(document.createTextNode(s));
+      return d.innerHTML;
+    }    function renderProperties() {
+      var list = document.getElementById("propertiesList");
+      list.innerHTML = "";
+      (data.properties || []).forEach(function(p, i) {
+        var card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = '<div class="card-body"><h6>Property #'+(i+1)+'</h6><div class="row g-2">' +
+          '<div class="col-md-6"><input class="form-control" data-prop="title" value="'+esc(p.title)+'" placeholder="Title"></div>' +
+          '<div class="col-md-6"><input class="form-control" data-prop="location" value="'+esc(p.location)+'" placeholder="Location"></div>' +
+          '<div class="col-md-3"><input class="form-control" data-prop="price" value="'+esc(p.price)+'" placeholder="Price"></div>' +
+          '<div class="col-md-3"><input class="form-control" data-prop="type" value="'+esc(p.type)+'" placeholder="Type"></div>' +
+          '<div class="col-md-2"><input class="form-control" data-prop="beds" type="number" value="'+p.beds+'" placeholder="Beds"></div>' +
+          '<div class="col-md-2"><input class="form-control" data-prop="baths" type="number" value="'+p.baths+'" placeholder="Baths"></div>' +
+          '<div class="col-md-2"><input class="form-control" data-prop="area" type="number" value="'+p.area+'" placeholder="Area"></div>' +
+          '<div class="col-12"><input class="form-control" data-prop="image" value="'+esc(p.image)+'" placeholder="Image URL"></div>' +
+          '<div class="col-12"><textarea class="form-control" data-prop="description" rows="2" placeholder="Description">'+esc(p.description)+'</textarea></div>' +
+          '<div class="col-12 text-end"><button type="button" class="btn btn-sm btn-outline-danger remove-prop">Remove</button></div>' +
+          '</div></div>';
+        list.appendChild(card);
       });
     }
-  </script>
+
+    document.getElementById("propertiesList").addEventListener("click", function(e) {
+      if (e.target.classList.contains("remove-prop")) e.target.closest(".card").remove();
+    });
+    document.getElementById("addPropertyBtn").addEventListener("click", function() {
+      data.properties = data.properties || [];
+      data.properties.push({title:"",location:"",price:"",type:"Apartment",beds:0,baths:0,area:0,image:"",description:""});
+      renderProperties();
+    });
+
+    document.getElementById("adminTabs").addEventListener("click", function(e) {
+      if (!e.target.matches("button[data-tab]")) return;
+      document.querySelectorAll("#adminTabs .nav-link").forEach(function(b) { b.classList.remove("active"); });
+      e.target.classList.add("active");
+      document.querySelectorAll(".section-block").forEach(function(b) { b.classList.remove("active"); });
+      var sec = document.querySelector('.section-block[data-section="'+e.target.dataset.tab+'"]');
+      if (sec) sec.classList.add("active");
+    });    function readForm(formId) {
+      var obj = {};
+      Array.from(document.querySelectorAll(formId + " [name]")).forEach(function(el) { obj[el.name] = el.value; });
+      return obj;
+    }
+    function readProperties() {
+      var props = [];
+      document.querySelectorAll("#propertiesList .card").forEach(function(card) {
+        var obj = {};
+        card.querySelectorAll("[data-prop]").forEach(function(input) { obj[input.dataset.prop] = input.value; });
+        props.push(obj);
+      });
+      return props;
+    }
+
+    async function ghFetch(path, method, body) {
+      var headers = { "Authorization": "token " + auth.token, "Accept": "application/vnd.github+json" };
+      if (body) { headers["Content-Type"] = "application/json"; }
+      var res = await fetch("https://api.github.com/repos/devql-1/ssbuilders/contents/" + path, {
+        method: method,
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!res.ok) {
+        var err = await res.text();
+        throw new Error("GitHub API error: " + res.status + " " + err);
+      }
+      return res.json();
+    }
+
+    async function saveFile(path, content, message) {
+      var existing = await ghFetch(path, "GET");
+      var body = {
+        message: message || "Update " + path,
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: existing.sha,
+        branch: "main"
+      };
+      return ghFetch(path, "PUT", body);
+    }    document.getElementById("saveBtn").addEventListener("click", async function() {
+      var status = document.getElementById("status");
+      try {
+        if (!auth) { status.innerHTML = '<div class="alert alert-warning">Connect to GitHub first.</div>'; return; }
+        data.heroTitle = document.querySelector('[name="heroTitle"]').value;
+        data.heroSubtitle = document.querySelector('[name="heroSubtitle"]').value;
+        data.aboutTitle = document.querySelector('[name="aboutTitle"]').value;
+        data.aboutDesc = document.querySelector('[name="aboutDesc"]').value;
+        data.address = document.querySelector('[name="address"]').value;
+        data.phone = document.querySelector('[name="phone"]').value;
+        data.email = document.querySelector('[name="email"]').value;
+        data.hours = document.querySelector('[name="hours"]').value;
+        data.properties = readProperties();
+        setStorage(data);
+
+        await saveFile("content/hero-about.json", JSON.stringify({heroTitle: data.heroTitle, heroSubtitle: data.heroSubtitle, aboutTitle: data.aboutTitle, aboutDesc: data.aboutDesc}, null, 2), "Update hero/about via admin");
+        await saveFile("content/contact.json", JSON.stringify({address: data.address, phone: data.phone, email: data.email, hours: data.hours}, null, 2), "Update contact via admin");
+        await saveFile("content/properties/properties.json", JSON.stringify({properties: data.properties}, null, 2), "Update properties via admin");
+
+        status.innerHTML = '<div class="alert alert-success">Saved to GitHub. Deployment will begin shortly.</div>';
+        setTimeout(function() { status.innerHTML = ""; }, 4000);
+      } catch (err) {
+        status.innerHTML = '<div class="alert alert-danger">' + esc(err.message) + '</div>';
+      }
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function() {
+      if (confirm("Reset all content to defaults?")) {
+        data = JSON.parse(JSON.stringify(DEFAULTS));
+        setStorage(data);
+        renderProperties();
+        status.innerHTML = '<div class="alert alert-info">Reset to defaults. Click Save to push to GitHub.</div>';
+      }
+    });
+
+    document.getElementById("connectBtn").addEventListener("click", function() {
+      var user = document.getElementById("ghUser").value.trim();
+      var token = document.getElementById("ghToken").value.trim();
+      if (!user || !token) { document.getElementById("authStatus").innerHTML = "Both fields required"; return; }
+      auth = { user: user, token: token };
+      setStorage({ data: data, user: auth });
+      document.getElementById("authStatus").innerHTML = "Connected as " + esc(user);
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      auth = null;
+      localStorage.removeItem("ssbuilders_admin");
+      document.getElementById("authStatus").innerHTML = "";
+    });
+
+    [].forEach.call(document.querySelectorAll('[name="heroTitle","heroSubtitle","aboutTitle","aboutDesc","address","phone","email","hours"]'), function(el) {
+      if (data[el.name]) el.value = data[el.name];
+    });
+
+    renderProperties();  </script>
 </body>
 </html>

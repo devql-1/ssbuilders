@@ -1,14 +1,18 @@
 ﻿# SS Builders - Real Estate Website
 
-Jaipur-based real estate company website built with HTML, CSS, and Decap CMS.
+Jaipur-based real estate company website built with HTML, CSS.
 
-## Setup
-1. Enable GitHub Pages in repo settings (Settings -> Pages -> Source: main branch)
-2. Visit https://devql-1.github.io/ssbuilders/admin to manage content
-3. Changes you make in the admin panel will be saved to your GitHub repository and appear globally after deployment
+## Admin Panel
+Visit https://devql-1.github.io/ssbuilders/admin to manage content.
 
-## Admin Features
-- Edit hero title, subtitle, and about text
-- Update contact information (address, phone, email)
-- Manage properties with image URLs
-- All changes are committed to Git and deployed via GitHub Pages
+### Steps
+1. Open the admin panel in your browser.
+2. Enter your GitHub username and a Personal Access Token with epo scope.
+3. Click Connect.
+4. Edit Hero, About, Contact, and Properties.
+5. Click Save All Changes.
+6. GitHub Pages will deploy automatically.
+
+## Notes
+- All changes are saved directly to the GitHub repository via the GitHub API.
+- No server or database is needed.
