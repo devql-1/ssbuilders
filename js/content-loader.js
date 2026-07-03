@@ -38,17 +38,33 @@
     }
     const props = await loadJSON('content/properties/properties.json');
     if (props && Array.isArray(props.properties)) {
-      props.properties.forEach((p, i) => {
-        setText('[data-cms="property-' + i + '-title"]', p.title);
-        setText('[data-cms="property-' + i + '-location"]', p.location);
-        setText('[data-cms="property-' + i + '-price"]', p.price);
-        setText('[data-cms="property-' + i + '-type"]', p.type);
-        setText('[data-cms="property-' + i + '-beds"]', p.beds + ' BHK');
-        setText('[data-cms="property-' + i + '-baths"]', p.baths + ' Bath');
-        setText('[data-cms="property-' + i + '-area"]', p.area + ' sq ft');
-        setText('[data-cms="property-' + i + '-description"]', p.description);
-        if (p.image) setAttr('[data-cms="property-' + i + '-image"]', 'src', p.image);
-      });
+      const slider = document.querySelector('.property-slider');
+      if (slider) {
+        const template = document.getElementById('property-template');
+        if (template) {
+          slider.innerHTML = '';
+          props.properties.forEach((p, i) => {
+            const clone = template.cloneNode(true);
+            clone.classList.remove('d-none');
+            clone.id = '';
+            const img = clone.querySelector('[data-cms="property-image"]');
+            if (img) img.setAttribute('src', p.image || 'images/img_1.jpg');
+            const price = clone.querySelector('[data-cms="property-price"]');
+            if (price) price.textContent = p.price;
+            const loc = clone.querySelector('[data-cms="property-location"]');
+            if (loc) loc.textContent = p.location;
+            const city = clone.querySelector('[data-cms="property-city"]');
+            if (city) city.textContent = 'Jaipur, Rajasthan';
+            const beds = clone.querySelector('[data-cms="property-beds"]');
+            if (beds) beds.textContent = (p.beds || 0) + ' BHK';
+            const baths = clone.querySelector('[data-cms="property-baths"]');
+            if (baths) baths.textContent = (p.baths || 0) + ' Bath';
+            const link = clone.querySelector('a');
+            if (link) link.setAttribute('href', 'property-single.html');
+            slider.appendChild(clone);
+          });
+        }
+      }
     }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

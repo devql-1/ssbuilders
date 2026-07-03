@@ -37,7 +37,7 @@
       "type": "Apartment",
       "beds": 4,
       "baths": 4,
-      "area": 2800,
+      "area": 2800, "image": "",
       "description": "Exclusive penthouse with terrace garden, jacuzzi, and panoramic city views. Premium construction with Italian marble flooring."
     },
     {
@@ -58,7 +58,7 @@
       "beds": 0,
       "baths": 0,
       "area": 1500, "image": "",
-      "description": "Gated community residential plot with all utilities connected. Clear title, ready for construction, near upcoming metro corridor.", "image": ""
+      "description": "Gated community residential plot with all utilities connected. Clear title, ready for construction, near upcoming metro corridor."
     }
   ]
 }
