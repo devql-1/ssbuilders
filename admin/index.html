@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>`n  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />`n  <meta http-equiv="Pragma" content="no-cache" />`n  <meta http-equiv="Expires" content="0" />
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SS Builders Admin</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css?v=20260703" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css?v=20260703b" />
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js?v=20260703"></script>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js?v=20260703b"></script>
   <script>
     window.CMS_INIT_OPTIONS = {
       backend: {
-        name: 'github',
-        repo: 'devql-1/ssbuilders',
-        branch: 'main',
-        auth_endpoint: '/api/auth'
+        name: "github",
+        repo: "devql-1/ssbuilders",
+        branch: "main",
+        auth_endpoint: "/api/auth"
       },
-      media_folder: 'images',
-      public_folder: '/images',
+      media_folder: "images",
+      public_folder: "/images",
       collections: [
         {
-          name: 'site-content',
-          label: 'Site Content',
+          name: "site-content",
+          label: "Site Content",
           files: [
             {
-              label: 'Hero & About',
-              name: 'hero-about',
-              file: 'content/hero-about.json',
+              label: "Hero & About",
+              name: "hero-about",
+              file: "content/hero-about.json",
               fields: [
-                { label: 'Hero Title', name: 'heroTitle', widget: 'string' },
-                { label: 'Hero Subtitle', name: 'heroSubtitle', widget: 'text' },
-                { label: 'About Title', name: 'aboutTitle', widget: 'string' },
-                { label: 'About Description', name: 'aboutDesc', widget: 'text' }
+                { label: "Hero Title", name: "heroTitle", widget: "string" },
+                { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" },
+                { label: "About Title", name: "aboutTitle", widget: "string" },
+                { label: "About Description", name: "aboutDesc", widget: "text" }
               ]
             },
             {
-              label: 'Contact Info',
-              name: 'contact-info',
-              file: 'content/contact.json',
+              label: "Contact Info",
+              name: "contact-info",
+              file: "content/contact.json",
               fields: [
-                { label: 'Address', name: 'address', widget: 'text' },
-                { label: 'Phone', name: 'phone', widget: 'string' },
-                { label: 'Email', name: 'email', widget: 'string' },
-                { label: 'Office Hours', name: 'hours', widget: 'string' }
+                { label: "Address", name: "address", widget: "text" },
+                { label: "Phone", name: "phone", widget: "string" },
+                { label: "Email", name: "email", widget: "string" },
+                { label: "Office Hours", name: "hours", widget: "string" }
               ]
             }
           ]
         },
         {
-          name: 'properties',
-          label: 'Properties',
+          name: "properties",
+          label: "Properties",
           files: [
             {
-              label: 'All Properties',
-              name: 'properties-list',
-              file: 'content/properties/properties.json',
+              label: "All Properties",
+              name: "properties-list",
+              file: "content/properties/properties.json",
               fields: [
-                { label: 'Properties JSON', name: 'properties', widget: 'json', required: false }
+                { label: "Properties JSON", name: "properties", widget: "json", required: false }
               ]
             }
           ]
@@ -65,11 +65,11 @@
     };
   </script>
   <script>
-    if (typeof CMS !== 'undefined') {
+    if (typeof CMS !== "undefined") {
       CMS.init(window.CMS_INIT_OPTIONS);
     } else {
-      window.addEventListener('load', function() {
-        if (typeof CMS !== 'undefined') {
+      window.addEventListener("load", function() {
+        if (typeof CMS !== "undefined") {
           CMS.init(window.CMS_INIT_OPTIONS);
         } else {
           document.body.innerHTML = '<div style="padding:40px;text-align:center;"><h2>CMS failed to load</h2><p>Please wait a minute and refresh.</p></div>';
