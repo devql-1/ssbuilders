@@ -4,61 +4,78 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SS Builders Admin</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../css/ss-theme.css" />
-  <style>
-    .admin-wrap { max-width: 960px; margin: 40px auto; }
-    .section-block { display: none; }
-    .section-block.active { display: block; }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.css" />
 </head>
-<body class="p-4"><!-- v3 -->
-  <div class="admin-wrap">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="heading text-primary mb-0">SS Builders Admin</h1>
-      <div class="d-flex gap-2">
-        <button id="exportBtn" class="btn btn-outline-secondary btn-sm">Export JSON</button>
-        <label class="btn btn-outline-primary btn-sm mb-0">Import JSON<input type="file" id="importInput" accept="application/json" class="d-none" /></label>
-      </div>
-    </div>
-    <ul class="nav nav-pills mb-4" id="adminTabs">
-      <li class="nav-item"><button class="nav-link active" data-tab="hero">Hero & About</button></li>
-      <li class="nav-item"><button class="nav-link" data-tab="contact">Contact</button></li>
-      <li class="nav-item"><button class="nav-link" data-tab="properties">Properties</button></li>
-    </ul>
-    <form id="adminForm">
-      <div class="section-block active" data-section="hero">
-        <div class="card mb-3"><div class="card-body">
-          <h5 class="card-title">Hero Section</h5>
-          <div class="mb-3"><label class="form-label">Hero Title</label><input type="text" name="heroTitle" class="form-control" /></div>
-          <div class="mb-3"><label class="form-label">Hero Subtitle</label><textarea name="heroSubtitle" class="form-control" rows="2"></textarea></div>
-        </div></div>
-        <div class="card"><div class="card-body">
-          <h5 class="card-title">About Section</h5>
-          <div class="mb-3"><label class="form-label">About Title</label><input type="text" name="aboutTitle" class="form-control" /></div>
-          <div class="mb-3"><label class="form-label">About Description</label><textarea name="aboutDesc" class="form-control" rows="4"></textarea></div>
-        </div></div>
-      </div>
-      <div class="section-block" data-section="contact">
-        <div class="card mb-3"><div class="card-body">
-          <h5 class="card-title">Contact Info</h5>
-          <div class="mb-3"><label class="form-label">Address</label><textarea name="address" class="form-control" rows="2"></textarea></div>
-          <div class="mb-3"><label class="form-label">Phone</label><input type="text" name="phone" class="form-control" /></div>
-          <div class="mb-3"><label class="form-label">Email</label><input type="email" name="email" class="form-control" /></div>
-          <div class="mb-3"><label class="form-label">Office Hours</label><input type="text" name="hours" class="form-control" /></div>
-        </div></div>
-      </div>
-      <div class="section-block" data-section="properties">
-        <div id="propertiesList" class="d-flex flex-column gap-3"></div>
-        <button type="button" id="addPropertyBtn" class="btn btn-primary mt-3">+ Add Property</button>
-      </div>
-      <div class="mt-4 d-flex gap-2">
-        <button type="submit" class="btn btn-success">Save All Changes</button>
-        <button type="button" id="resetBtn" class="btn btn-outline-danger">Reset to Defaults</button>
-      </div>
-    </form>
-    <div id="status" class="mt-3"></div>
-  </div>
-  <script src="admin.js"></script>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.10/dist/decap-cms.min.js"></script>
+  <script>
+    window.CMS_INIT_OPTIONS = {
+      backend: {
+        name: 'github',
+        repo: 'devql-1/ssbuilders',
+        branch: 'main',
+        auth_endpoint: '/api/auth'
+      },
+      media_folder: 'images',
+      public_folder: '/images',
+      collections: [
+        {
+          name: 'site-content',
+          label: 'Site Content',
+          files: [
+            {
+              label: 'Hero & About',
+              name: 'hero-about',
+              file: 'content/hero-about.json',
+              fields: [
+                { label: 'Hero Title', name: 'heroTitle', widget: 'string' },
+                { label: 'Hero Subtitle', name: 'heroSubtitle', widget: 'text' },
+                { label: 'About Title', name: 'aboutTitle', widget: 'string' },
+                { label: 'About Description', name: 'aboutDesc', widget: 'text' }
+              ]
+            },
+            {
+              label: 'Contact Info',
+              name: 'contact-info',
+              file: 'content/contact.json',
+              fields: [
+                { label: 'Address', name: 'address', widget: 'text' },
+                { label: 'Phone', name: 'phone', widget: 'string' },
+                { label: 'Email', name: 'email', widget: 'string' },
+                { label: 'Office Hours', name: 'hours', widget: 'string' }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'properties',
+          label: 'Properties',
+          files: [
+            {
+              label: 'All Properties',
+              name: 'properties-list',
+              file: 'content/properties/properties.json',
+              fields: [
+                { label: 'Properties JSON', name: 'properties', widget: 'json', required: false }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  </script>
+  <script>
+    if (typeof CMS !== 'undefined') {
+      CMS.init(window.CMS_INIT_OPTIONS);
+    } else {
+      window.addEventListener('load', function() {
+        if (typeof CMS !== 'undefined') {
+          CMS.init(window.CMS_INIT_OPTIONS);
+        } else {
+          document.body.innerHTML = '<div style="padding:40px;text-align:center;"><h2>CMS failed to load</h2><p>Please wait a minute and refresh.</p></div>';
+        }
+      });
+    }
+  </script>
 </body>
 </html>

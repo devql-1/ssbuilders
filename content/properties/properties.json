@@ -7,7 +7,7 @@
       "type": "Apartment",
       "beds": 3,
       "baths": 2,
-      "area": 1800,
+      "area": 1800, "image": "",
       "description": "Premium 3BHK apartment in the heart of Malviya Nagar with modern amenities, 24/7 security, power backup, and clubhouse access."
     },
     {
@@ -17,7 +17,7 @@
       "type": "Villa",
       "beds": 3,
       "baths": 3,
-      "area": 2200,
+      "area": 2200, "image": "",
       "description": "Spacious independent villa with private garden, modular kitchen, and smart home automation. Located in a premium gated community."
     },
     {
@@ -27,7 +27,7 @@
       "type": "Apartment",
       "beds": 2,
       "baths": 2,
-      "area": 1200,
+      "area": 1200, "image": "",
       "description": "Well-ventilated 2BHK apartment near Central Park with excellent connectivity to schools, hospitals, and shopping centers."
     },
     {
@@ -47,7 +47,7 @@
       "type": "Commercial",
       "beds": 0,
       "baths": 2,
-      "area": 900,
+      "area": 900, "image": "",
       "description": "Prime commercial space on the main road with wide frontage, dedicated parking, and high visibility for retail or office use."
     },
     {
@@ -57,8 +57,8 @@
       "type": "Plot",
       "beds": 0,
       "baths": 0,
-      "area": 1500,
-      "description": "Gated community residential plot with all utilities connected. Clear title, ready for construction, near upcoming metro corridor."
+      "area": 1500, "image": "",
+      "description": "Gated community residential plot with all utilities connected. Clear title, ready for construction, near upcoming metro corridor.", "image": ""
     }
   ]
 }
